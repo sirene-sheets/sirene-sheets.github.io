@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Politique de confidentialité — SIRENE pour Sheets</title>
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;line-height:1.6;color:#1a1f2b}h1{font-size:30px}h2{font-size:20px;margin-top:30px}a{color:#1a73e8}</style>
+</head>
+<body>
+<p><a href="/">← SIRENE pour Sheets</a></p>
+<h1>Politique de confidentialité</h1>
+<p>Dernière mise à jour : 20 octobre 2026</p>
+
+<h2>1. Qui sommes-nous</h2>
+<p>SIRENE pour Sheets (« l'Add-on ») est un module complémentaire pour Google Sheets édité par un micro-entrepreneur établi en France (« l'Éditeur »). Contact : <a href="mailto:sirene-sheets-support@googlegroups.com">sirene-sheets-support@googlegroups.com</a>.</p>
+
+<h2>2. Ce que fait l'Add-on</h2>
+<p>L'Add-on fournit une fonction personnalisée <code>=SIRENE()</code> qui, à partir d'un numéro SIREN ou SIRET saisi dans une cellule, interroge l'API Sirene de l'INSEE (<a href="https://portail-api.insee.fr">portail-api.insee.fr</a>) et affiche dans votre feuille les informations publiques de l'entreprise.</p>
+
+<h2>3. Données auxquelles l'Add-on accède</h2>
+<ul>
+  <li><strong>Contenu des cellules passées en argument de la fonction</strong> : uniquement le numéro SIREN/SIRET que vous donnez à <code>=SIRENE()</code>. L'Add-on ne lit aucune autre cellule de votre feuille.</li>
+  <li><strong>Clé de licence</strong> (abonnés Pro) : stockée dans les propriétés utilisateur de Google Apps Script, liées à votre compte Google, pour vérifier votre abonnement.</li>
+  <li><strong>Compteur de recherches gratuites</strong> : un simple nombre, stocké de la même manière.</li>
+</ul>
+<p>L'Add-on ne demande que les autorisations Google strictement nécessaires : accès à la feuille en cours (<code>spreadsheets.currentonly</code>), connexion à des services externes (<code>script.external_request</code>) et affichage d'une barre latérale (<code>script.container.ui</code>).</p>
+
+<h2>4. Données transmises à des tiers</h2>
+<ul>
+  <li><strong>API Sirene (INSEE)</strong> : reçoit le numéro SIREN/SIRET recherché. Il s'agit d'une donnée publique d'identification d'entreprise.</li>
+  <li><strong>Lemon Squeezy</strong> (prestataire de paiement, Merchant of Record) : traite le paiement de l'abonnement et émet la clé de licence. L'Add-on ne reçoit jamais vos données bancaires. Politique : <a href="https://www.lemonsqueezy.com/privacy">lemonsqueezy.com/privacy</a>.</li>
+</ul>
+
+<h2>5. Ce que nous ne faisons pas</h2>
+<p>Nous ne stockons pas le contenu de vos feuilles. Nous ne stockons pas les résultats de vos recherches sur nos serveurs (un cache temporaire de 6 heures existe dans Google Apps Script, côté Google, pour éviter les requêtes en double). Nous ne vendons, ne louons et ne partageons aucune donnée. Nous n'utilisons pas de traceurs publicitaires.</p>
+
+<h2>6. Données utilisateur Google</h2>
+<p>L'utilisation des informations reçues des API Google est conforme à la <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, y compris les exigences d'usage limité (Limited Use). L'Add-on n'utilise les données Google que pour fournir la fonction décrite ci-dessus.</p>
+
+<h2>7. Conservation et suppression</h2>
+<p>La clé de licence et le compteur restent dans vos propriétés Apps Script tant que l'Add-on est installé. Désinstaller l'Add-on, ou nous écrire, suffit à les supprimer. Les données de facturation sont conservées par Lemon Squeezy selon ses obligations légales.</p>
+
+<h2>8. Vos droits (RGPD)</h2>
+<p>Vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition. Écrivez à <a href="mailto:sirene-sheets-support@googlegroups.com">sirene-sheets-support@googlegroups.com</a>. Vous pouvez saisir la CNIL (<a href="https://www.cnil.fr">cnil.fr</a>) en cas de litige.</p>
+
+<h2>9. Modifications</h2>
+<p>Toute modification sera publiée sur cette page avec sa date.</p>
+</body>
+</html>
