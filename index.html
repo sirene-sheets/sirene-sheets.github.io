@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIRENE pour Sheets — SIRET, adresse, NAF et TVA directement dans Google Sheets</title>
+<meta name="description" content="Enrichissez vos SIREN / SIRET dans Google Sheets avec =SIRENE(A2) : raison sociale, adresse, code NAF, effectif, numéro de TVA intracom, état. Données officielles, 100 recherches gratuites.">
+<link rel="canonical" href="https://sirene-sheets.github.io/">
+<meta property="og:title" content="SIRENE pour Sheets — enrichissez vos SIRET dans Google Sheets">
+<meta property="og:description" content="=SIRENE(A2) → nom, adresse, NAF, effectif, TVA. Données officielles. 100 recherches gratuites.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"SIRENE pour Sheets","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"9","priceCurrency":"EUR"},"description":"Add-on Google Sheets pour enrichir des SIREN et SIRET avec les données officielles des entreprises françaises."}
+</script>
+<style>
+  :root{--ink:#1a1f2b;--muted:#5f6670;--brand:#1a73e8;--bg:#fff;--soft:#f4f6fa;--line:#e3e7ee;--ok:#188038}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  header{padding:18px 0;border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;justify-content:space-between;align-items:center}
+  .logo{font-weight:700;font-size:18px;text-decoration:none;color:var(--ink)}
+  .logo span{color:var(--brand)}
+  nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:15px}
+  .hero{padding:72px 0 48px;text-align:center}
+  h1{font-size:42px;line-height:1.15;margin:0 0 18px;letter-spacing:-.5px}
+  .sub{font-size:19px;color:var(--muted);max-width:640px;margin:0 auto 30px}
+  .btn{display:inline-block;background:var(--brand);color:#fff;padding:14px 26px;border-radius:8px;text-decoration:none;font-weight:600;font-size:16px}
+  .btn.ghost{background:transparent;color:var(--brand);border:1px solid var(--brand);margin-left:10px}
+  .note{font-size:13px;color:var(--muted);margin-top:12px}
+  .demo{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:22px;margin:40px auto 0;max-width:820px;overflow:auto}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;background:#fff}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;white-space:nowrap}
+  th{background:#f1f3f4;font-weight:600;color:#444}
+  td.f{font-family:ui-monospace,Menlo,monospace;color:var(--brand)}
+  section{padding:48px 0;border-top:1px solid var(--line)}
+  h2{font-size:28px;margin:0 0 22px;letter-spacing:-.3px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+  .card{background:var(--soft);border-radius:12px;padding:22px}
+  .card h3{margin:0 0 8px;font-size:17px}
+  .card p{margin:0;color:var(--muted);font-size:15px}
+  code{background:#eef1f6;padding:2px 6px;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:14px}
+  .price{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;max-width:700px;margin:0 auto}
+  .plan{border:1px solid var(--line);border-radius:12px;padding:26px;text-align:center}
+  .plan.pro{border-color:var(--brand);box-shadow:0 6px 24px rgba(26,115,232,.12)}
+  .plan .amt{font-size:38px;font-weight:700;margin:8px 0}
+  .plan .amt small{font-size:15px;color:var(--muted);font-weight:400}
+  .plan ul{list-style:none;padding:0;margin:14px 0 22px;color:var(--muted);font-size:15px}
+  .plan li{padding:4px 0}
+  details{border-bottom:1px solid var(--line);padding:14px 0}
+  summary{cursor:pointer;font-weight:600;font-size:16px}
+  details p{color:var(--muted);margin:10px 0 0}
+  footer{padding:30px 0;color:var(--muted);font-size:13px;text-align:center}
+  footer a{color:var(--muted)}
+  @media(max-width:600px){h1{font-size:30px}.btn.ghost{margin:10px 0 0}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="/">SIRENE <span>pour Sheets</span></a>
+  <nav><a href="#fonctions">Fonctions</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="mailto:sirene-sheets-support@googlegroups.com">Support</a></nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <h1>Vos SIRET deviennent des fiches entreprise,<br>sans quitter Google Sheets</h1>
+  <p class="sub">Tapez <code>=SIRENE(A2)</code> et récupérez raison sociale, adresse, code NAF, effectif, numéro de TVA intracom et état de l'entreprise. Données officielles de l'INSEE, mises à jour quotidiennement.</p>
+  <a class="btn" href="#tarifs">Installer gratuitement</a>
+  <a class="btn ghost" href="#tarifs">Voir les tarifs</a>
+  <p class="note">100 recherches offertes. Aucune carte bancaire demandée.</p>
+
+  <div class="demo">
+    <table>
+      <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
+      <tr><td>1</td><td>SIREN</td><td>Nom</td><td>Ville</td><td>NAF</td><td>Effectif</td><td>TVA</td></tr>
+      <tr><td>2</td><td>552032534</td><td class="f">=SIRENE(A2;"nom;ville;naf;effectif;tva")</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>3</td><td>552032534</td><td>DANONE</td><td>PARIS</td><td>70.10Z</td><td>1000-1999</td><td>FR27552032534</td></tr>
+      <tr><td>4</td><td>542107651</td><td>ENGIE</td><td>LA GARENNE-COLOMBES</td><td>35.23Z</td><td>2000-4999</td><td>FR13542107651</td></tr>
+    </table>
+  </div>
+</div></section>
+
+<section id="fonctions"><div class="wrap">
+  <h2>Ce que la formule vous rend</h2>
+  <div class="grid">
+    <div class="card"><h3>Identité</h3><p>Raison sociale, SIREN, SIRET du siège, forme juridique.</p></div>
+    <div class="card"><h3>Adresse du siège</h3><p>Rue, code postal, ville — prêts pour un publipostage ou un CRM.</p></div>
+    <div class="card"><h3>Activité & taille</h3><p>Code NAF, tranche d'effectif, date de création, entreprise active ou cessée.</p></div>
+    <div class="card"><h3>TVA intracommunautaire</h3><p>Le numéro FR calculé et vérifié, pour vos factures et vos contrôles fournisseurs.</p></div>
+    <div class="card"><h3>Toute une colonne d'un coup</h3><p><code>=SIRENE(A2:A500)</code> enrichit 500 lignes avec une seule formule.</p></div>
+    <div class="card"><h3>Champs à la carte</h3><p><code>=SIRENE(A2;"nom;tva")</code> ne renvoie que ce dont vous avez besoin.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Pour qui</h2>
+  <div class="grid">
+    <div class="card"><h3>Commerciaux & SDR</h3><p>Qualifiez un fichier de prospects en secondes : taille, secteur, localisation.</p></div>
+    <div class="card"><h3>Comptables & ADV</h3><p>Vérifiez les SIRET et numéros de TVA de vos clients et fournisseurs avant de facturer.</p></div>
+    <div class="card"><h3>Assistants & ops</h3><p>Fini le copier-coller depuis les annuaires d'entreprises, ligne par ligne.</p></div>
+  </div>
+</div></section>
+
+<section id="tarifs"><div class="wrap">
+  <h2 style="text-align:center">Tarifs</h2>
+  <div class="price">
+    <div class="plan"><h3>Gratuit</h3><div class="amt">0 €</div>
+      <ul><li>100 recherches offertes</li><li>Tous les champs</li><li>Sans carte bancaire</li></ul>
+      <a class="btn ghost" href="#tarifs">Installer</a></div>
+    <div class="plan pro"><h3>Pro</h3><div class="amt">9 € <small>/ mois HT</small></div>
+      <ul><li>Recherches illimitées</li><li>Jusqu'à 3 comptes Google</li><li>Sans engagement, résiliable en un clic</li></ul>
+      <a class="btn" href="#tarifs">S'abonner</a></div>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>Questions fréquentes</h2>
+  <details><summary>D'où viennent les données ?</summary><p>De la base Sirene de l'INSEE, via son API officielle. Elles sont mises à jour quotidiennement.</p></details>
+  <details><summary>Mes données sont-elles stockées ?</summary><p>Non. L'add-on lit uniquement le SIREN/SIRET de la cellule, l'envoie à l'API publique et écrit la réponse dans votre feuille. Nous ne stockons ni vos feuilles, ni vos contacts. Détails dans la <a href="confidentialite.html">politique de confidentialité</a>.</p></details>
+  <details><summary>Ça marche avec un SIRET ou seulement un SIREN ?</summary><p>Les deux. Un SIRET (14 chiffres) ou un SIREN (9 chiffres), avec ou sans espaces.</p></details>
+  <details><summary>Y a-t-il une limite de vitesse ?</summary><p>Oui, côté INSEE. Sur une colonne entière, l'add-on regroupe les SIREN par paquets de 40 par requête, et les résultats sont mis en cache 6 heures pour éviter les doublons.</p></details>
+  <details><summary>Comment résilier ?</summary><p>Depuis le lien reçu dans votre e-mail d'abonnement, en un clic. Aucun engagement.</p></details>
+</div></section>
+
+<footer><div class="wrap">
+  SIRENE pour Sheets n'est pas affilié à l'INSEE ni à Google. ·
+  <a href="confidentialite.html">Confidentialité</a> · <a href="cgu.html">Conditions d'utilisation</a> · <a href="mailto:sirene-sheets-support@googlegroups.com">Support</a>
+</div></footer>
+</body>
+</html>
