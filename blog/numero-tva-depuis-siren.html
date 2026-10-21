@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculer le numéro de TVA intracommunautaire à partir du SIREN (formule Google Sheets)</title>
+<meta name="description" content="Le numéro de TVA français se déduit du SIREN : FR + clé + SIREN. La formule exacte pour Google Sheets, les pièges (zéros, SIRET au lieu de SIREN) et comment vérifier que le numéro est réellement actif.">
+<link rel="canonical" href="https://sirene-sheets.github.io/blog/numero-tva-depuis-siren.html">
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;line-height:1.65;color:#1a1f2b}h1{font-size:32px;line-height:1.2}h2{font-size:22px;margin-top:34px}a{color:#1a73e8}code,pre{background:#f1f3f4;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:14px}code{padding:2px 6px}pre{padding:12px 14px;overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{border:1px solid #e3e7ee;padding:7px 10px;text-align:left}th{background:#f1f3f4}.cta{background:#f4f6fa;border:1px solid #e3e7ee;border-radius:12px;padding:18px 22px;margin:30px 0}.muted{color:#5f6670;font-size:14px}</style>
+</head>
+<body>
+<p><a href="/">← SIRENE pour Sheets</a></p>
+<h1>Calculer le numéro de TVA intracommunautaire à partir du SIREN</h1>
+<p class="muted">Mis à jour le 21 octobre 2026 · 5 min de lecture</p>
+
+<p>Bonne nouvelle pour les utilisateurs de tableurs : en France, le numéro de TVA intracommunautaire n'est pas une information à aller chercher, c'est un calcul. Il se déduit entièrement du SIREN. Voici la règle, la formule Google Sheets, et le point que tout le monde oublie — un numéro calculé n'est pas forcément un numéro actif.</p>
+
+<h2>La règle</h2>
+<p>Le numéro de TVA français s'écrit <code>FR</code> + <strong>clé à 2 chiffres</strong> + <strong>SIREN à 9 chiffres</strong>, soit 13 caractères. La clé se calcule ainsi :</p>
+<pre>clé = (12 + 3 × (SIREN mod 97)) mod 97</pre>
+<p>Exemple avec Danone, SIREN 552 032 534 : 552032534 mod 97 = 5 ; 12 + 3×5 = 27 ; 27 mod 97 = 27. Numéro de TVA : <strong>FR27552032534</strong>. Vous pouvez le vérifier sur n'importe quelle facture Danone.</p>
+
+<h2>La formule Google Sheets</h2>
+<p>Avec le SIREN en A2 (sous forme de nombre ou de texte, avec ou sans espaces) :</p>
+<pre>="FR"&TEXTE(MOD(12+3*MOD(VALEUR(SUBSTITUE(A2;" ";""));97);97);"00")&TEXTE(VALEUR(SUBSTITUE(A2;" ";""));"000000000")</pre>
+<p>Détail des précautions prises :</p>
+<ul>
+  <li><code>SUBSTITUE(A2;" ";"")</code> retire les espaces de présentation (« 552 032 534 »).</li>
+  <li><code>TEXTE(…;"00")</code> force la clé sur deux chiffres : une clé de 7 doit s'écrire « 07 ».</li>
+  <li><code>TEXTE(…;"000000000")</code> restaure les zéros initiaux du SIREN, que Sheets a tendance à manger quand la cellule est numérique.</li>
+</ul>
+
+<h2>Les trois pièges classiques</h2>
+<p><strong>1. Vous avez un SIRET, pas un SIREN.</strong> Le SIRET fait 14 chiffres ; le SIREN, ce sont les 9 premiers. Il faut tronquer avant de calculer : <code>GAUCHE(A2;9)</code>. Si vous appliquez la formule au SIRET entier, vous obtenez un numéro qui a l'air plausible et qui est faux.</p>
+<p><strong>2. Les zéros initiaux.</strong> Un SIREN peut commencer par 0 (rare, mais ça existe pour d'anciens organismes). Stockez vos SIREN en texte, ou utilisez la formule ci-dessus qui les restaure.</p>
+<p><strong>3. Un numéro calculé n'est pas un numéro actif.</strong> C'est le vrai problème. La formule produit mécaniquement un numéro pour <em>n'importe quel</em> SIREN, y compris celui d'une entreprise radiée il y a dix ans, ou d'un SIREN qui n'a jamais existé. Pour une facture intracommunautaire, l'administration attend que vous ayez vérifié que le numéro est <em>valide au moment de la transaction</em>, pas seulement bien formé.</p>
+
+<h2>Vérifier que le numéro est réellement actif</h2>
+<p>Deux sources officielles :</p>
+<ul>
+  <li><strong>VIES</strong> (Commission européenne) : la référence pour toute l'UE. Elle répond « valide / non valide » et, pour la France, renvoie le nom et l'adresse. Son défaut : le service français est régulièrement saturé en journée (erreur <code>MS_MAX_CONCURRENT_REQ</code>).</li>
+  <li><strong>Base Sirene de l'INSEE</strong> : elle ne contient pas le numéro de TVA, mais elle dit si l'unité légale est active ou cessée, ce qui, combiné au calcul de la clé, revient au même pour une entreprise française.</li>
+</ul>
+<p>Dans Google Sheets, l'add-on <a href="/">SIRENE pour Sheets</a> fait les deux à la fois :</p>
+<pre>=SIRENE(A2; "nom;etat;tva")</pre>
+<table>
+  <tr><th>A (SIREN ou SIRET)</th><th>nom</th><th>etat</th><th>tva</th></tr>
+  <tr><td>552032534</td><td>DANONE</td><td>Active</td><td>FR27552032534</td></tr>
+  <tr><td>356000000</td><td>LA POSTE</td><td>Active</td><td>FR39356000000</td></tr>
+</table>
+<p>Il accepte indifféremment SIREN et SIRET (il tronque lui-même), restaure les zéros, et renvoie l'état administratif à côté du numéro de TVA. Sur une colonne entière : <code>=SIRENE(A2:A500; "tva;etat")</code>.</p>
+<p>Pour les numéros de TVA d'autres pays de l'UE, où il n'existe pas de calcul et où il faut interroger VIES, le même éditeur propose <a href="/vat/">VAT Checker for Sheets</a> et sa formule <code>=VAT(A2)</code>.</p>
+
+<div class="cta">
+  <strong>SIRENE pour Sheets</strong> — nom, adresse, NAF, effectif, état et TVA depuis un SIREN/SIRET. 100 recherches offertes.<br>
+  <a href="/#tarifs">Installer l'add-on →</a>
+</div>
+
+<p class="muted">Sources : INSEE (base Sirene), Commission européenne (VIES). Les formules sont données à titre indicatif ; vérifiez toujours un numéro de TVA auprès des sources officielles avant de l'utiliser sur une facture.</p>
+</body>
+</html>
