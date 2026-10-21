@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vérifier un numéro de SIRET dans Google Sheets (3 méthodes, dont une formule)</title>
+<meta name="description" content="Comment vérifier des numéros de SIRET ou SIREN dans Google Sheets : contrôle de la clé Luhn, consultation INSEE, et la formule =SIRENE() qui renvoie nom, adresse, NAF et état de l'entreprise.">
+<link rel="canonical" href="https://sirene-sheets.github.io/blog/verifier-siret-google-sheets.html">
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;line-height:1.65;color:#1a1f2b}h1{font-size:32px;line-height:1.2}h2{font-size:22px;margin-top:34px}a{color:#1a73e8}code,pre{background:#f1f3f4;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:14px}code{padding:2px 6px}pre{padding:12px 14px;overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{border:1px solid #e3e7ee;padding:7px 10px;text-align:left}th{background:#f1f3f4}.cta{background:#f4f6fa;border:1px solid #e3e7ee;border-radius:12px;padding:18px 22px;margin:30px 0}.muted{color:#5f6670;font-size:14px}</style>
+</head>
+<body>
+<p><a href="/">← SIRENE pour Sheets</a></p>
+<h1>Vérifier un numéro de SIRET dans Google Sheets : 3 méthodes</h1>
+<p class="muted">Mis à jour le 21 octobre 2026 · 6 min de lecture</p>
+
+<p>Vous avez une colonne de SIRET ou de SIREN dans une feuille Google Sheets — un fichier de prospects, une liste de fournisseurs, un export de CRM — et vous voulez savoir lesquels sont valides, lesquels correspondent à une entreprise encore active, et à qui ils appartiennent. Voici les trois façons de faire, de la plus artisanale à la plus confortable.</p>
+
+<h2>Rappel : SIREN, SIRET, et ce que « valide » veut dire</h2>
+<p>Le <strong>SIREN</strong> identifie une entreprise (9 chiffres). Le <strong>SIRET</strong> identifie un établissement de cette entreprise (14 chiffres : le SIREN suivi d'un NIC de 5 chiffres). Un numéro peut être « valide » à deux niveaux très différents :</p>
+<ul>
+  <li><strong>Formellement valide</strong> : il a le bon nombre de chiffres et sa clé de contrôle (algorithme de Luhn) est correcte. Ça ne prouve pas que l'entreprise existe.</li>
+  <li><strong>Réellement valide</strong> : il figure dans la base Sirene de l'INSEE, et l'unité légale est active (pas cessée). C'est ce qui compte pour facturer, qualifier un prospect ou vérifier un fournisseur.</li>
+</ul>
+
+<h2>Méthode 1 — Le contrôle de la clé Luhn, en formule pure</h2>
+<p>Pour écarter les fautes de frappe sans aucun appel externe, on peut recalculer la clé de Luhn directement dans Sheets. Avec le SIRET en A2 :</p>
+<pre>=SI(ET(NBCAR(A2)=14; MOD(SOMMEPROD(
+  SI(MOD(LIGNE(INDIRECT("1:14"));2)=1;
+     STXT(A2;LIGNE(INDIRECT("1:14"));1)*1;
+     SI(STXT(A2;LIGNE(INDIRECT("1:14"));1)*2>9;
+        STXT(A2;LIGNE(INDIRECT("1:14"));1)*2-9;
+        STXT(A2;LIGNE(INDIRECT("1:14"));1)*2)));10)=0);"Format OK";"Format invalide")</pre>
+<p>Attention : La Poste (SIREN 356000000) est l'exception historique, ses SIRET ne respectent pas Luhn. Et surtout, cette formule ne dit rien sur l'existence ou l'état de l'entreprise. C'est un filtre anti-coquille, pas une vérification.</p>
+
+<h2>Méthode 2 — Consulter l'INSEE à la main</h2>
+<p>Le site <a href="https://annuaire-entreprises.data.gouv.fr">annuaire-entreprises.data.gouv.fr</a> permet de chercher un SIRET et affiche la fiche complète : dénomination, adresse du siège, code NAF, effectif, état administratif. C'est gratuit et officiel. Le problème est évident dès qu'on dépasse dix lignes : copier, coller, lire, recopier. Sur un fichier de 300 prospects, comptez l'après-midi.</p>
+<p>Pour les développeurs, l'INSEE expose aussi une <a href="https://portail-api.insee.fr">API Sirene</a> (clé gratuite, 30 requêtes par minute). On peut l'appeler depuis Google Apps Script avec <code>UrlFetchApp</code>, parser le JSON et écrire le résultat dans la feuille. Ça marche, à condition d'aimer gérer les quotas, le cache, les lots de requêtes et les erreurs 429.</p>
+
+<h2>Méthode 3 — Une formule qui fait tout : =SIRENE()</h2>
+<p>C'est exactement ce travail de plomberie que l'add-on <a href="/">SIRENE pour Sheets</a> emballe dans une fonction personnalisée. Une fois installé depuis le Google Workspace Marketplace, dans n'importe quelle cellule :</p>
+<pre>=SIRENE(A2)</pre>
+<p>renvoie, sur une ligne : nom, SIREN, SIRET du siège, adresse, code postal, ville, code NAF, tranche d'effectif, date de création, état (active ou cessée) et numéro de TVA intracommunautaire. Pour ne garder que ce qui vous intéresse :</p>
+<pre>=SIRENE(A2; "nom;ville;etat")</pre>
+<p>Et pour traiter toute la colonne d'un coup, avec les requêtes regroupées par paquets de 40 :</p>
+<pre>=SIRENE(A2:A300; "nom;etat;tva")</pre>
+<table>
+  <tr><th>A (saisi)</th><th>nom</th><th>etat</th><th>tva</th></tr>
+  <tr><td>552032534</td><td>DANONE</td><td>Active</td><td>FR27552032534</td></tr>
+  <tr><td>54210765100018</td><td>ENGIE</td><td>Active</td><td>FR13542107651</td></tr>
+  <tr><td>123456789</td><td colspan="3">#Introuvable</td></tr>
+  <tr><td>12345</td><td colspan="3">#ID invalide (9 ou 14 chiffres)</td></tr>
+</table>
+<p>Les cas d'erreur sont explicites dans la cellule : un SIREN inconnu renvoie <code>#Introuvable</code>, un format aberrant <code>#ID invalide</code>. Les résultats sont mis en cache six heures, donc recalculer la feuille ne relance pas les requêtes.</p>
+
+<div class="cta">
+  <strong>SIRENE pour Sheets</strong> — 100 recherches offertes, sans carte bancaire. Puis 9 €/mois pour un usage illimité, résiliable en un clic.<br>
+  <a href="/#tarifs">Installer l'add-on →</a>
+</div>
+
+<h2>Quelle méthode choisir ?</h2>
+<ul>
+  <li>Vous validez une saisie en direct dans un formulaire : <strong>Luhn</strong> suffit.</li>
+  <li>Vous vérifiez trois fournisseurs par mois : <strong>l'annuaire INSEE</strong> à la main.</li>
+  <li>Vous avez un fichier, et vous voulez le nom, l'adresse, le NAF et l'état en face de chaque ligne : <strong>=SIRENE()</strong>, sinon vous allez y passer la soirée.</li>
+</ul>
+
+<p class="muted">Source des données : base Sirene de l'INSEE, via son API officielle. SIRENE pour Sheets n'est pas affilié à l'INSEE.</p>
+</body>
+</html>
