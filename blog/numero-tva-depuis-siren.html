@@ -38,7 +38,7 @@
 <p>Deux sources officielles :</p>
 <ul>
   <li><strong>VIES</strong> (Commission européenne) : la référence pour toute l'UE. Elle répond « valide / non valide » et, pour la France, renvoie le nom et l'adresse. Son défaut : le service français est régulièrement saturé en journée (erreur <code>MS_MAX_CONCURRENT_REQ</code>).</li>
-  <li><strong>Base Sirene de l'INSEE</strong> : elle ne contient pas le numéro de TVA, mais elle dit si l'unité légale est active ou cessée, ce qui, combiné au calcul de la clé, revient au même pour une entreprise française.</li>
+  <li><strong>Base Sirene de l'INSEE</strong> : elle ne contient pas le numéro de TVA, mais elle dit si l'unité légale est active ou cessée, ce qui, combiné au calcul de la clé, donne une bonne indication pour une entreprise française, sans remplacer une vérification VIES (une entreprise active peut ne pas être assujettie à la TVA).</li>
 </ul>
 <p>Dans Google Sheets, l'add-on <a href="/">SIRENE pour Sheets</a> fait les deux à la fois :</p>
 <pre>=SIRENE(A2; "nom;etat;tva")</pre>

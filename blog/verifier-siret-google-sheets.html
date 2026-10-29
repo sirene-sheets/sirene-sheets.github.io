@@ -36,7 +36,7 @@
 <p>Pour les développeurs, l'INSEE expose aussi une <a href="https://portail-api.insee.fr">API Sirene</a> (clé gratuite, 30 requêtes par minute). On peut l'appeler depuis Google Apps Script avec <code>UrlFetchApp</code>, parser le JSON et écrire le résultat dans la feuille. Ça marche, à condition d'aimer gérer les quotas, le cache, les lots de requêtes et les erreurs 429.</p>
 
 <h2>Méthode 3 — Une formule qui fait tout : =SIRENE()</h2>
-<p>C'est exactement ce travail de plomberie que l'add-on <a href="/">SIRENE pour Sheets</a> emballe dans une fonction personnalisée. Une fois installé depuis le Google Workspace Marketplace, dans n'importe quelle cellule :</p>
+<p>C'est exactement ce travail de plomberie que l'add-on <a href="/">SIRENE pour Sheets</a> emballe dans une fonction personnalisée. Une fois l'add-on installé, dans n'importe quelle cellule :</p>
 <pre>=SIRENE(A2)</pre>
 <p>renvoie, sur une ligne : nom, SIREN, SIRET du siège, adresse, code postal, ville, code NAF, tranche d'effectif, date de création, état (active ou cessée) et numéro de TVA intracommunautaire. Pour ne garder que ce qui vous intéresse :</p>
 <pre>=SIRENE(A2; "nom;ville;etat")</pre>
@@ -45,14 +45,14 @@
 <table>
   <tr><th>A (saisi)</th><th>nom</th><th>etat</th><th>tva</th></tr>
   <tr><td>552032534</td><td>DANONE</td><td>Active</td><td>FR27552032534</td></tr>
-  <tr><td>54210765100018</td><td>ENGIE</td><td>Active</td><td>FR13542107651</td></tr>
+  <tr><td>54210765114459</td><td>ENGIE</td><td>Active</td><td>FR13542107651</td></tr>
   <tr><td>123456789</td><td colspan="3">#Introuvable</td></tr>
   <tr><td>12345</td><td colspan="3">#ID invalide (9 ou 14 chiffres)</td></tr>
 </table>
 <p>Les cas d'erreur sont explicites dans la cellule : un SIREN inconnu renvoie <code>#Introuvable</code>, un format aberrant <code>#ID invalide</code>. Les résultats sont mis en cache six heures, donc recalculer la feuille ne relance pas les requêtes.</p>
 
 <div class="cta">
-  <strong>SIRENE pour Sheets</strong> — 100 recherches offertes, sans carte bancaire. Puis 9 €/mois pour un usage illimité, résiliable en un clic.<br>
+  <strong>SIRENE pour Sheets</strong> — 100 recherches offertes, sans carte bancaire. Puis 9 € HT/mois pour un usage illimité, résiliable en un clic.<br>
   <a href="/">Découvrir l'add-on →</a>
 </div>
 

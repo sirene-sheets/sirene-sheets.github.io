@@ -17,18 +17,18 @@
 <h2>Étape 0 — Ce qu'il vous faut</h2>
 <ul>
   <li>Une feuille Google Sheets avec vos prospects, un identifiant par ligne : SIREN (9 chiffres) ou SIRET (14 chiffres). Les espaces et les points sont tolérés.</li>
-  <li>L'add-on <a href="/">SIRENE pour Sheets</a>, installé depuis le Google Workspace Marketplace (menu Extensions › Modules complémentaires › Télécharger des modules complémentaires, chercher « SIRENE »). Les 100 premières recherches sont gratuites.</li>
+  <li>L'add-on <a href="/">SIRENE pour Sheets</a>, qui ajoute la fonction <code>=SIRENE()</code> à Google Sheets. Les 100 premières recherches sont gratuites.</li>
 </ul>
 <p>Si vous n'avez que des noms d'entreprises et pas d'identifiants, récupérez d'abord les SIREN via <a href="https://annuaire-entreprises.data.gouv.fr">l'annuaire des entreprises</a> ; l'enrichissement par nom est ambigu (combien de « SARL Dupont » ?), l'enrichissement par SIREN est exact.</p>
 
 <h2>Étape 1 — Une formule pour toute la colonne</h2>
 <p>Vos identifiants sont en colonne A, de A2 à A400. En B1, écrivez les en-têtes que vous voulez, puis en B2 :</p>
 <pre>=SIRENE(A2:A400; "nom;ville;cp;naf;effectif;creation;etat")</pre>
-<p>La formule remplit sept colonnes et 399 lignes d'un coup. Les requêtes vers l'INSEE sont regroupées par paquets de 40, donc 400 lignes représentent une dizaine d'appels, pas 400. Comptez une trentaine de secondes. Les résultats sont gardés en cache six heures : si vous rechargez la feuille, rien n'est relancé.</p>
+<p>La formule remplit sept colonnes et 399 lignes d'un coup. Les requêtes vers l'INSEE sont regroupées par paquets de 40, donc 400 lignes représentent une dizaine d'appels, pas 400. Comptez quelques secondes. Les résultats sont gardés en cache six heures : si vous rechargez la feuille, rien n'est relancé.</p>
 <table>
   <tr><th>A</th><th>nom</th><th>ville</th><th>cp</th><th>naf</th><th>effectif</th><th>creation</th><th>etat</th></tr>
-  <tr><td>552032534</td><td>DANONE</td><td>PARIS</td><td>75009</td><td>70.10Z</td><td>1000-1999</td><td>1908-01-01</td><td>Active</td></tr>
-  <tr><td>542107651</td><td>ENGIE</td><td>LA GARENNE-COLOMBES</td><td>92250</td><td>35.23Z</td><td>2000-4999</td><td>1955-01-01</td><td>Active</td></tr>
+  <tr><td>552032534</td><td>DANONE</td><td>PARIS</td><td>75009</td><td>70.10Z</td><td>1000-1999</td><td>1955-01-01</td><td>Active</td></tr>
+  <tr><td>542107651</td><td>ENGIE</td><td>LA GARENNE-COLOMBES</td><td>92250</td><td>35.23Z</td><td>2000-4999</td><td>1954-01-01</td><td>Active</td></tr>
 </table>
 <p>Les champs disponibles : <code>nom, siren, siret, adresse, cp, ville, naf, effectif, creation, etat, tva, forme</code>. Mettez-les dans l'ordre qui vous arrange.</p>
 
@@ -37,7 +37,7 @@
 
 <h2>Étape 3 — Qualifier avec des filtres</h2>
 <p>C'est là que ça devient rentable. Quelques exemples de tri que vous pouvez faire immédiatement.</p>
-<p><strong>Écarter les entreprises cessées.</strong> Filtre sur <code>etat</code> = « Active ». Sur un fichier de plus de deux ans, attendez-vous à perdre 10 à 20 % des lignes. Autant d'appels inutiles économisés.</p>
+<p><strong>Écarter les entreprises cessées.</strong> Filtre sur <code>etat</code> = « Active ». Sur un fichier ancien, une partie des lignes tombe souvent à ce stade : autant d'appels inutiles économisés.</p>
 <p><strong>Cibler une taille.</strong> La colonne <code>effectif</code> contient la tranche INSEE (« 10-19 », « 20-49 », « 50-99 »…). Pour isoler les PME de 10 à 99 salariés, un filtre sur ces trois valeurs suffit. Note : « NN » signifie « non employeur » (indépendant sans salarié) ; c'est une cible en soi pour certains, un bruit pour d'autres.</p>
 <p><strong>Cibler un secteur.</strong> Le code NAF à cinq caractères est précis ; ses deux premiers chiffres donnent la division. <code>GAUCHE(E2;2)</code> vous donne la division, et vous pouvez filtrer : 62 pour le conseil informatique, 69 pour les activités juridiques et comptables, 47 pour le commerce de détail, 43 pour les travaux de construction spécialisés.</p>
 <p><strong>Cibler une zone.</strong> Le département, c'est <code>GAUCHE(D2;2)</code> sur le code postal (attention à la Corse, 2A/2B, et aux DOM à trois chiffres).</p>
@@ -52,7 +52,7 @@
 <p>La base Sirene donne l'identité, la localisation, l'activité, l'effectif et l'état. Elle ne donne ni le chiffre d'affaires, ni les dirigeants nominatifs, ni les e-mails, ni le téléphone. Pour les dirigeants, il faut le registre national des entreprises (INPI) ; pour les contacts, c'est un autre métier, et un autre cadre juridique (RGPD).</p>
 
 <div class="cta">
-  <strong>SIRENE pour Sheets</strong> — 100 recherches offertes pour tester sur votre propre fichier, sans carte bancaire. 9 €/mois ensuite, sans engagement.<br>
+  <strong>SIRENE pour Sheets</strong> — 100 recherches offertes pour tester sur votre propre fichier, sans carte bancaire. 9 € HT/mois ensuite, sans engagement.<br>
   <a href="/">Découvrir l'add-on →</a>
 </div>
 
