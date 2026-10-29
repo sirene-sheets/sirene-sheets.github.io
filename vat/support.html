@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help and support — VAT Checker for Sheets</title>
+<meta name="description" content="VAT Checker for Sheets help: using =VAT(), error messages, subscription, cancellation, deleting your data, contact.">
+<link rel="canonical" href="https://sheets.reciproc.net/vat/support.html">
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;line-height:1.6;color:#1a1f2b}h1{font-size:30px}h2{font-size:20px;margin-top:30px}a{color:#0b57d0}code,pre{background:#eef1f6;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:14px}code{padding:2px 6px}pre{padding:10px 12px;overflow:auto}.box{background:#f4f6fa;border-radius:10px;padding:14px 18px}</style>
+</head>
+<body>
+<p><a href="/vat/">← VAT Checker for Sheets</a></p>
+<h1>Help and support</h1>
+
+<div class="box">
+<p><strong>Contact us</strong>: <a href="mailto:barterfrance@gmail.com">barterfrance@gmail.com</a>. We reply within 2 business days, in English or French.</p>
+<p>Publisher: Arthur Bard, sole trader, 222 Place Saint-Léger, 73000 Chambéry, France.</p>
+</div>
+
+<h2 id="usage">Using =VAT()</h2>
+<p>In any Google Sheets cell, pass an EU VAT number with its country prefix (for example FR27552032534, DE811569869, BE0403170701, ESB12345678):</p>
+<pre>=VAT(A2)                  valid, name, address, country, number, checked
+=VAT(A2; "valid;name")    chosen fields only
+=VAT(A2:A100)             a whole column with one formula
+=TVA(A2)                  same function, French field names</pre>
+<p>Available fields: valid, name, address, country, number, checked. Spaces and dots in the numbers are accepted. All 27 EU member states plus Northern Ireland (XI) are supported; UK (GB) numbers are not supported yet.</p>
+<p>The <strong>Extensions › VAT Checker for Sheets</strong> menu opens the sidebar (licence, counter, your data) and the help. If a cell shows <code>#NAME?</code> right after installation, open that menu once in the file to activate the add-on.</p>
+
+<h2 id="errors">Error messages</h2>
+<ul>
+  <li><code>#Invalid format (country code + number)</code>: the cell does not contain a VAT number with a valid EU country prefix.</li>
+  <li><code>Invalid</code>: VIES reports that the number is not registered for intra-EU trade.</li>
+  <li><code>#VIES temporarily unavailable</code>: the member state's VIES service is busy or down. Try again later; French numbers fall back to the INSEE register automatically.</li>
+  <li><code>Valid (INSEE)</code>: VIES France was unavailable, so the number was checked against the French INSEE register (check digit and active company). It is not a VIES answer; check again later if you need the official VIES result.</li>
+  <li><code>#Time limit reached: split the range into several formulas</code>: Google limits a custom function to 30 seconds. Split the column across several formulas (for example A2:A100, then A101:A200).</li>
+  <li><code>#Free quota reached (100)</code>: the 100 free checks are used. Subscribe, then activate your key in the sidebar.</li>
+</ul>
+
+<h2 id="subscription">Subscription</h2>
+<ul>
+  <li><strong>Free</strong>: 100 checks included, no credit card.</li>
+  <li><strong>Pro</strong>: €9 per month excl. VAT, unlimited checks. Monthly subscription, renewed automatically, cancel anytime. Payment and invoicing are handled by Lemon Squeezy, our Merchant of Record; VAT is calculated at checkout based on your country (e.g. €10.80 incl. VAT for a consumer in France, €9 for an EU business with a valid VAT number). <a href="https://sirene-pour-sheets.lemonsqueezy.com/checkout/buy/bc472c9b-44c4-4900-b869-539c2cfb4721">Subscribe</a>.</li>
+  <li><strong>Activate your licence</strong>: copy the key you received by e-mail, open Extensions › VAT Checker for Sheets › Activate licence / My account, paste it and click "Activate licence".</li>
+  <li><strong>Cancel</strong>: in one click, from the subscription management link in your confirmation e-mail, or by writing to us. The subscription stays active until the end of the paid period.</li>
+  <li><strong>Refunds</strong>: see section 4 of the <a href="terms.html">terms of service</a>. If in doubt, write to us: we refund the first month, no questions asked.</li>
+</ul>
+
+<h2 id="data">Your data</h2>
+<p>The add-on sends only the VAT number in the cell to VIES (and, for French numbers when VIES is unavailable, to the INSEE register), and your licence key to Lemon Squeezy to check it. It reads no other cell and we store none of your spreadsheet data.</p>
+<ul>
+  <li><strong>Delete your data</strong> (licence key and check counter): Extensions › VAT Checker for Sheets › Activate licence / My account, then "Delete my data".</li>
+  <li><strong>Revoke access</strong> of the add-on to your Google account: <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</li>
+  <li><strong>Uninstall</strong>: Extensions › Add-ons › Manage add-ons.</li>
+</ul>
+<p>Details are in the <a href="privacy.html">privacy policy</a>.</p>
+
+<h2 id="report">Report a problem</h2>
+<p>Write to <a href="mailto:barterfrance@gmail.com?subject=VAT%20Checker%20for%20Sheets%20-%20problem">barterfrance@gmail.com</a> with the formula you used, an example VAT number, the message displayed and, if possible, a screenshot.</p>
+
+<p style="margin-top:40px;font-size:13px;color:#5f6670">VAT Checker for Sheets is not affiliated with the European Commission or Google. Google Sheets™ is a trademark of Google LLC. · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+</body>
+</html>
