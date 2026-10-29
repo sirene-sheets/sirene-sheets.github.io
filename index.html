@@ -58,14 +58,14 @@
 <body>
 <header><div class="wrap">
   <a class="logo" href="/">SIRENE <span>pour Sheets</span></a>
-  <nav><a href="#fonctions">Fonctions</a><a href="#tarifs">Tarifs</a><a href="#guides">Guides</a><a href="#faq">FAQ</a><a href="mailto:barterfrance@gmail.com">Support</a></nav>
+  <nav><a href="#fonctions">Fonctions</a><a href="#tarifs">Tarifs</a><a href="#guides">Guides</a><a href="#faq">FAQ</a><a href="support.html">Aide</a></nav>
 </div></header>
 
 <section class="hero"><div class="wrap">
   <h1>Vos SIRET deviennent des fiches entreprise,<br>sans quitter Google Sheets</h1>
   <p class="sub">Tapez <code>=SIRENE(A2)</code> et récupérez raison sociale, adresse, code NAF, effectif, numéro de TVA intracom et état de l'entreprise. Données officielles de l'INSEE, mises à jour quotidiennement.</p>
   <a class="btn" href="#fonctions">Voir les fonctions</a>
-  <a class="btn ghost" href="https://sirene-pour-sheets.lemonsqueezy.com/checkout/buy/cc1bedef-f8fd-4b34-b52d-76649e2f8fe8">S'abonner — 9 €/mois</a>
+  <a class="btn ghost" href="https://sirene-pour-sheets.lemonsqueezy.com/checkout/buy/cc1bedef-f8fd-4b34-b52d-76649e2f8fe8">S'abonner — 9 € HT/mois</a>
   <p class="note">100 recherches offertes. Aucune carte bancaire demandée.</p>
 
   <div class="demo">
@@ -85,7 +85,7 @@
     <div class="card"><h3>Identité</h3><p>Raison sociale, SIREN, SIRET du siège, forme juridique.</p></div>
     <div class="card"><h3>Adresse du siège</h3><p>Rue, code postal, ville — prêts pour un publipostage ou un CRM.</p></div>
     <div class="card"><h3>Activité & taille</h3><p>Code NAF, tranche d'effectif, date de création, entreprise active ou cessée.</p></div>
-    <div class="card"><h3>TVA intracommunautaire</h3><p>Le numéro FR calculé et vérifié, pour vos factures et vos contrôles fournisseurs.</p></div>
+    <div class="card"><h3>TVA intracommunautaire</h3><p>Le numéro FR calculé à partir du SIREN, prêt pour vos factures. Pour le valider auprès de VIES, utilisez <a href="/vat/">VAT Checker</a>.</p></div>
     <div class="card"><h3>Toute une colonne d'un coup</h3><p><code>=SIRENE(A2:A500)</code> enrichit 500 lignes avec une seule formule.</p></div>
     <div class="card"><h3>Champs à la carte</h3><p><code>=SIRENE(A2;"nom;tva")</code> ne renvoie que ce dont vous avez besoin.</p></div>
   </div>
@@ -95,7 +95,7 @@
   <h2>Pour qui</h2>
   <div class="grid">
     <div class="card"><h3>Commerciaux & SDR</h3><p>Qualifiez un fichier de prospects en secondes : taille, secteur, localisation.</p></div>
-    <div class="card"><h3>Comptables & ADV</h3><p>Vérifiez les SIRET et numéros de TVA de vos clients et fournisseurs avant de facturer.</p></div>
+    <div class="card"><h3>Comptables & ADV</h3><p>Vérifiez les SIRET de vos clients et fournisseurs et récupérez leur numéro de TVA avant de facturer.</p></div>
     <div class="card"><h3>Assistants & ops</h3><p>Fini le copier-coller depuis les annuaires d'entreprises, ligne par ligne.</p></div>
   </div>
 </div></section>
@@ -107,7 +107,8 @@
       <ul><li>100 recherches offertes</li><li>Tous les champs</li><li>Sans carte bancaire</li></ul>
       <p class="note">Inclus dès l'installation</p></div>
     <div class="plan pro"><h3>Pro</h3><div class="amt">9 € <small>/ mois HT</small></div>
-      <ul><li>Recherches illimitées</li><li>Jusqu'à 3 comptes Google</li><li>Sans engagement, résiliable en un clic</li></ul>
+      <p class="note">Soit 10,80 € TTC en France. TVA calculée au paiement selon votre pays.</p>
+      <ul><li>Recherches illimitées</li><li>Jusqu'à 3 comptes Google</li><li>Abonnement mensuel, sans engagement, résiliable en un clic</li></ul>
       <a class="btn" href="https://sirene-pour-sheets.lemonsqueezy.com/checkout/buy/cc1bedef-f8fd-4b34-b52d-76649e2f8fe8">S'abonner</a></div>
   </div>
 </div></section>
@@ -124,15 +125,16 @@
 <section id="faq"><div class="wrap">
   <h2>Questions fréquentes</h2>
   <details><summary>D'où viennent les données ?</summary><p>De la base Sirene de l'INSEE, via son API officielle. Elles sont mises à jour quotidiennement.</p></details>
-  <details><summary>Mes données sont-elles stockées ?</summary><p>Non. L'add-on lit uniquement le SIREN/SIRET de la cellule, l'envoie à l'API publique et écrit la réponse dans votre feuille. Nous ne stockons ni vos feuilles, ni vos contacts. Détails dans la <a href="confidentialite.html">politique de confidentialité</a>.</p></details>
+  <details><summary>Mes données sont-elles stockées ?</summary><p>Non. L'add-on lit uniquement le SIREN/SIRET de la cellule, l'envoie à l'API publique et écrit la réponse dans votre feuille. Nous ne conservons ni vos feuilles ni vos contacts ; les résultats sont seulement gardés 6 heures dans un cache technique chez Google, pour éviter les requêtes en double. Détails dans la <a href="confidentialite.html">politique de confidentialité</a>.</p></details>
   <details><summary>Ça marche avec un SIRET ou seulement un SIREN ?</summary><p>Les deux. Un SIRET (14 chiffres) ou un SIREN (9 chiffres), avec ou sans espaces.</p></details>
   <details><summary>Y a-t-il une limite de vitesse ?</summary><p>Oui, côté INSEE. Sur une colonne entière, l'add-on regroupe les SIREN par paquets de 40 par requête, et les résultats sont mis en cache 6 heures pour éviter les doublons.</p></details>
+  <details><summary>La formule affiche #NAME? ?</summary><p>Ouvrez une fois le menu Extensions › SIRENE pour Sheets dans le fichier : l'add-on y est alors activé et la formule fonctionne.</p></details>
   <details><summary>Comment résilier ?</summary><p>Depuis le lien reçu dans votre e-mail d'abonnement, en un clic. Aucun engagement.</p></details>
 </div></section>
 
 <footer><div class="wrap">
-  SIRENE pour Sheets n'est pas affilié à l'INSEE ni à Google. ·
-  <a href="confidentialite.html">Confidentialité</a> · <a href="cgu.html">Conditions d'utilisation</a> · <a href="mailto:barterfrance@gmail.com">Support</a>
+  SIRENE pour Sheets n'est pas affilié à l'INSEE ni à Google. Google Sheets™ est une marque de Google LLC. ·
+  <a href="confidentialite.html">Confidentialité</a> · <a href="cgu.html">Conditions d'utilisation</a> · <a href="support.html">Aide et contact</a>
 </div></footer>
 </body>
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aide et assistance — SIRENE pour Sheets</title>
+<meta name="description" content="Aide de SIRENE pour Sheets : utiliser =SIRENE(), messages d'erreur, abonnement, résiliation, suppression de vos données, contact.">
+<link rel="canonical" href="https://sheets.reciproc.net/support.html">
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;line-height:1.6;color:#1a1f2b}h1{font-size:30px}h2{font-size:20px;margin-top:30px}a{color:#1a73e8}code,pre{background:#eef1f6;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:14px}code{padding:2px 6px}pre{padding:10px 12px;overflow:auto}.box{background:#f4f6fa;border-radius:10px;padding:14px 18px}</style>
+</head>
+<body>
+<p><a href="/">← SIRENE pour Sheets</a></p>
+<h1>Aide et assistance</h1>
+
+<div class="box">
+<p><strong>Nous contacter</strong> : <a href="mailto:barterfrance@gmail.com">barterfrance@gmail.com</a>. Réponse sous 2 jours ouvrés, en français ou en anglais.</p>
+<p>Éditeur : Arthur Bard, entrepreneur individuel établi en France, 222 Place Saint-Léger, 73000 Chambéry, France.</p>
+</div>
+
+<h2 id="utilisation">Utiliser =SIRENE()</h2>
+<p>Dans n'importe quelle cellule de Google Sheets, donnez à la fonction un SIREN (9 chiffres) ou un SIRET (14 chiffres) :</p>
+<pre>=SIRENE(A2)                    ligne complète : nom, siren, siret, adresse, cp, ville, naf, effectif, creation, etat, tva
+=SIRENE(A2; "nom;ville;tva")   seulement les champs choisis
+=SIRENE(A2:A500)               toute une colonne en une formule</pre>
+<p>Champs disponibles : nom, siren, siret, adresse, cp, ville, naf, effectif, creation, etat, tva, forme. Les espaces et les points dans les numéros sont acceptés. Le numéro de TVA est calculé à partir du SIREN ; pour le valider auprès de VIES, utilisez <a href="/vat/">VAT Checker for Sheets</a>.</p>
+<p>Le menu <strong>Extensions › SIRENE pour Sheets</strong> donne accès à la barre latérale (licence, compteur, vos données) et à l'aide. Si une cellule affiche <code>#NAME?</code> juste après l'installation, ouvrez une fois ce menu dans le fichier pour activer l'add-on.</p>
+
+<h2 id="erreurs">Messages d'erreur</h2>
+<ul>
+  <li><code>#ID invalide (9 ou 14 chiffres)</code> : la cellule ne contient pas un SIREN ou un SIRET complet.</li>
+  <li><code>#Introuvable</code> : le numéro n'existe pas dans la base Sirene, ou l'entreprise a demandé à ne pas diffuser ses informations.</li>
+  <li><code>#Quota gratuit atteint (100)</code> : les 100 recherches gratuites sont utilisées. Abonnez-vous puis activez votre clé dans la barre latérale.</li>
+  <li><code>#Délai dépassé : répartissez la plage sur plusieurs formules</code> : Google limite une formule personnalisée à 30 secondes. Découpez la colonne en plusieurs formules (par exemple A2:A300 puis A301:A600).</li>
+  <li><code>#Trop de requêtes, réessayez dans 1 min</code> ou <code>#API INSEE indisponible</code> : l'API de l'INSEE est momentanément saturée ou en maintenance. Les résultats s'affichent dès qu'elle répond à nouveau.</li>
+</ul>
+
+<h2 id="abonnement">Abonnement</h2>
+<ul>
+  <li><strong>Gratuit</strong> : 100 recherches offertes, sans carte bancaire.</li>
+  <li><strong>Pro</strong> : 9 € HT par mois, recherches illimitées. Abonnement mensuel renouvelé automatiquement, sans engagement. Le paiement et la facture sont gérés par Lemon Squeezy, notre revendeur officiel ; la TVA est calculée au moment du paiement selon votre pays (10,80 € TTC pour un particulier en France, 9 € pour une entreprise de l'UE avec un numéro de TVA valide). <a href="https://sirene-pour-sheets.lemonsqueezy.com/checkout/buy/cc1bedef-f8fd-4b34-b52d-76649e2f8fe8">S'abonner</a>.</li>
+  <li><strong>Activer la licence</strong> : copiez la clé reçue par e-mail, ouvrez Extensions › SIRENE pour Sheets › Activer une licence / Mon compte, collez-la puis cliquez sur « Activer la licence ».</li>
+  <li><strong>Résilier</strong> : en un clic, depuis le lien de gestion de l'abonnement de l'e-mail de confirmation, ou en nous écrivant. L'abonnement reste actif jusqu'à la fin de la période payée.</li>
+  <li><strong>Remboursement</strong> : voir l'article 4 des <a href="cgu.html">conditions d'utilisation</a>. En cas de doute, écrivez-nous : nous remboursons le premier mois sans discussion.</li>
+</ul>
+
+<h2 id="donnees">Vos données</h2>
+<p>L'add-on envoie uniquement le SIREN ou le SIRET de la cellule à l'API Sirene de l'INSEE, et votre clé de licence à Lemon Squeezy pour la vérifier. Il ne lit aucune autre cellule et nous ne stockons aucune donnée de vos feuilles.</p>
+<ul>
+  <li><strong>Supprimer vos données</strong> (clé de licence et compteur de recherches) : Extensions › SIRENE pour Sheets › Activer une licence / Mon compte, puis « Supprimer mes données ».</li>
+  <li><strong>Retirer l'accès</strong> de l'add-on à votre compte Google : <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</li>
+  <li><strong>Désinstaller</strong> : Extensions › Modules complémentaires › Gérer les modules complémentaires.</li>
+</ul>
+<p>Le détail figure dans la <a href="confidentialite.html">politique de confidentialité</a>.</p>
+
+<h2 id="probleme">Signaler un problème</h2>
+<p>Écrivez à <a href="mailto:barterfrance@gmail.com?subject=SIRENE%20pour%20Sheets%20-%20probl%C3%A8me">barterfrance@gmail.com</a> en indiquant la formule utilisée, un exemple de SIREN ou SIRET concerné, le message affiché et, si possible, une capture d'écran.</p>
+
+<p style="margin-top:40px;font-size:13px;color:#5f6670">SIRENE pour Sheets n'est pas affilié à l'INSEE ni à Google. Google Sheets™ est une marque de Google LLC. · <a href="confidentialite.html">Confidentialité</a> · <a href="cgu.html">Conditions d'utilisation</a></p>
+</body>
+</html>
