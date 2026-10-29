@@ -82,8 +82,8 @@
 <section id="fonctions"><div class="wrap">
   <h2>Ce que la formule vous rend</h2>
   <div class="grid">
-    <div class="card"><h3>Identité</h3><p>Raison sociale, SIREN, SIRET du siège, forme juridique.</p></div>
-    <div class="card"><h3>Adresse du siège</h3><p>Rue, code postal, ville — prêts pour un publipostage ou un CRM.</p></div>
+    <div class="card"><h3>Identité</h3><p>Raison sociale, SIREN, SIRET, forme juridique.</p></div>
+    <div class="card"><h3>Adresse</h3><p>Rue, code postal, ville — du siège pour un SIREN, de l'établissement pour un SIRET. Prêts pour un publipostage ou un CRM.</p></div>
     <div class="card"><h3>Activité & taille</h3><p>Code NAF, tranche d'effectif, date de création, entreprise active ou cessée.</p></div>
     <div class="card"><h3>TVA intracommunautaire</h3><p>Le numéro FR calculé à partir du SIREN, prêt pour vos factures. Pour le valider auprès de VIES, utilisez <a href="/vat/">VAT Checker</a>.</p></div>
     <div class="card"><h3>Toute une colonne d'un coup</h3><p><code>=SIRENE(A2:A500)</code> enrichit 500 lignes avec une seule formule.</p></div>
@@ -127,7 +127,7 @@
   <details><summary>D'où viennent les données ?</summary><p>De la base Sirene de l'INSEE, via son API officielle. Elles sont mises à jour quotidiennement.</p></details>
   <details><summary>Mes données sont-elles stockées ?</summary><p>Non. L'add-on lit uniquement le SIREN/SIRET de la cellule, l'envoie à l'API publique et écrit la réponse dans votre feuille. Nous ne conservons ni vos feuilles ni vos contacts ; les résultats sont seulement gardés 6 heures dans un cache technique chez Google, pour éviter les requêtes en double. Détails dans la <a href="confidentialite.html">politique de confidentialité</a>.</p></details>
   <details><summary>Ça marche avec un SIRET ou seulement un SIREN ?</summary><p>Les deux. Un SIRET (14 chiffres) ou un SIREN (9 chiffres), avec ou sans espaces.</p></details>
-  <details><summary>Y a-t-il une limite de vitesse ?</summary><p>Oui, côté INSEE. Sur une colonne entière, l'add-on regroupe les SIREN par paquets de 40 par requête, et les résultats sont mis en cache 6 heures pour éviter les doublons.</p></details>
+  <details><summary>Y a-t-il une limite de vitesse ?</summary><p>Oui, côté INSEE. Sur une colonne entière, l'add-on regroupe les SIREN et SIRET par paquets de 40 par requête, et les résultats sont mis en cache 6 heures pour éviter les doublons.</p></details>
   <details><summary>La formule affiche #NAME? ?</summary><p>Ouvrez une fois le menu Extensions › SIRENE pour Sheets dans le fichier : l'add-on y est alors activé et la formule fonctionne.</p></details>
   <details><summary>Comment résilier ?</summary><p>Depuis le lien reçu dans votre e-mail d'abonnement, en un clic. Aucun engagement.</p></details>
 </div></section>
@@ -135,6 +135,7 @@
 <footer><div class="wrap">
   SIRENE pour Sheets n'est pas affilié à l'INSEE ni à Google. Google Sheets™ est une marque de Google LLC. ·
   <a href="confidentialite.html">Confidentialité</a> · <a href="cgu.html">Conditions d'utilisation</a> · <a href="support.html">Aide et contact</a>
+  <br>Édité par Arthur Bard (entrepreneur individuel), 222 Place Saint-Léger, 73000 Chambéry, France · <a href="mailto:barterfrance@gmail.com">barterfrance@gmail.com</a>
 </div></footer>
 </body>
 </html>
