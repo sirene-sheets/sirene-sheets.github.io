@@ -72,7 +72,7 @@
     <table>
       <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
       <tr><td>1</td><td>VAT number</td><td>Valid</td><td>Name</td><td>Address</td><td>Checked</td></tr>
-      <tr><td>2</td><td>BE0403170701</td><td class="f">=VAT(A2;"valid;name;address;checked")</td><td></td><td></td><td></td></tr>
+      <tr><td>2</td><td>BE0403170701</td><td class="f">=VAT(A2,"valid;name;address;checked")</td><td></td><td></td><td></td></tr>
       <tr><td>3</td><td>BE0403170701</td><td class="ok">Valid</td><td>SA ELECTRABEL</td><td>Boulevard Simon Bolivar 36, 1000 Bruxelles</td><td>2026-10-21</td></tr>
       <tr><td>4</td><td>FR00000000000</td><td class="ko">Invalid</td><td></td><td></td><td>2026-10-21</td></tr>
     </table>
@@ -85,7 +85,7 @@
     <div class="card"><h3>Valid / Invalid</h3><p>The official VIES answer, the one tax authorities expect you to check before zero-rating an intra-EU invoice.</p></div>
     <div class="card"><h3>Registered name &amp; address</h3><p>Where the member state publishes them — handy to spot a number that belongs to someone else.</p></div>
     <div class="card"><h3>Whole columns</h3><p><code>=VAT(A2:A100)</code> checks a whole column with one formula, numbers being checked in parallel. Split very long lists across several formulas. Results are cached for 6 hours.</p></div>
-    <div class="card"><h3>Pick your fields</h3><p><code>=VAT(A2;"valid")</code> for a single yes/no column, or any mix of valid, name, address, country, number, checked.</p></div>
+    <div class="card"><h3>Pick your fields</h3><p><code>=VAT(A2,"valid")</code> for a single yes/no column, or any mix of valid, name, address, country, number, checked.</p></div>
     <div class="card"><h3>France fallback</h3><p>When VIES France is saturated (it happens daily), French numbers are checked against the INSEE register instead (check digit and active company) and marked “Valid (INSEE)”.</p></div>
     <div class="card"><h3>Also in French</h3><p><code>=TVA(A2)</code> works the same, with French field names (valide, nom, adresse…).</p></div>
   </div>
@@ -120,6 +120,7 @@
   <details><summary>Which countries are supported?</summary><p>All 27 EU member states plus Northern Ireland (XI). UK numbers (GB) are not supported yet.</p></details>
   <details><summary>Why does Germany return no name?</summary><p>Some member states (Germany, Spain for individuals…) do not publish the registered name through VIES. The validity check still works.</p></details>
   <details><summary>Is this proof for the tax office?</summary><p>The result shows the date of the check. For a VIES consultation number, use the official VIES website; this add-on is a bulk-checking convenience, not a legal archive.</p></details>
+  <details><summary>Comma or semicolon between arguments?</summary><p>It follows your spreadsheet's locale. English locales use a comma: <code>=VAT(A2,"valid")</code>. Locales with a decimal comma (France, Germany, Spain…) use a semicolon: <code>=VAT(A2;"valid")</code>.</p></details>
   <details><summary>The formula shows #NAME?</summary><p>Open the Extensions › VAT Checker for Sheets menu once in the file: the add-on is then enabled there and the formula works.</p></details>
   <details><summary>How do I cancel?</summary><p>From the link in your subscription e-mail, in one click. No commitment.</p></details>
 </div></section>
@@ -127,6 +128,7 @@
 <footer><div class="wrap">
   VAT Checker for Sheets is not affiliated with the European Commission or Google. Google Sheets™ is a trademark of Google LLC. ·
   <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="support.html">Help and contact</a> · <a href="/">SIRENE pour Sheets (FR)</a>
+  <br>Published by Arthur Bard (sole trader), 222 Place Saint-Léger, 73000 Chambéry, France · <a href="mailto:barterfrance@gmail.com">barterfrance@gmail.com</a>
 </div></footer>
 </body>
 </html>

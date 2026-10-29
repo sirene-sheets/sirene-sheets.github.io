@@ -22,13 +22,13 @@
   <li><strong>Licence key</strong> (Pro subscribers): stored in Google Apps Script user properties, tied to your Google account, to verify your subscription.</li>
   <li><strong>Free-check counter</strong>: a single number, stored in user properties (or in document properties when Google does not make user properties available to a custom function).</li>
 </ul>
-<p>The Add-on requests only the Google permissions strictly needed: access to the current spreadsheet (<code>spreadsheets.currentonly</code>), connection to external services (<code>script.external_request</code>) and display of a sidebar (<code>script.container.ui</code>). When installed from the Google Workspace Marketplace, Google also requests access to your email address and basic profile (<code>userinfo.email</code>, <code>userinfo.profile</code>): the Add-on does not read, store or transmit this information.</p>
+<p>The Add-on requests only the Google permissions strictly needed: access to the current spreadsheet (<code>spreadsheets.currentonly</code>), connection to external services (<code>script.external_request</code>) and display of a sidebar (<code>script.container.ui</code>). The consent screen also lists your email address and basic profile (<code>userinfo.email</code>, <code>userinfo.profile</code>), included by default in the Google Workspace Marketplace add-on configuration: the Add-on never reads, stores or transmits this information.</p>
 
 <h2>4. Data shared with third parties</h2>
 <ul>
   <li><strong>VIES (European Commission)</strong> receives the VAT number being checked. A VAT number is a public business identifier.</li>
   <li><strong>INSEE Sirene API</strong> receives the French SIREN derived from a French VAT number, only when VIES France is unavailable.</li>
-  <li><strong>Lemon Squeezy</strong> (payment provider, Merchant of Record) processes subscription payments, issues licence keys and receives the key when the Add-on validates it. The Add-on never receives your card details. Policy: <a href="https://www.lemonsqueezy.com/privacy">lemonsqueezy.com/privacy</a>.</li>
+  <li><strong>Lemon Squeezy</strong> (payment provider, Merchant of Record) processes subscription payments, issues licence keys and receives the key, with a random installation identifier, when the Add-on activates or validates it (a key can be active on up to 3 Google accounts). The Add-on never receives your card details. Policy: <a href="https://www.lemonsqueezy.com/privacy">lemonsqueezy.com/privacy</a>.</li>
 </ul>
 <p>No other data is shared, and no data is sold, rented or used for advertising.</p>
 
@@ -57,7 +57,7 @@
 <p>Data obtained through Google Workspace APIs is not used to develop, improve or train generalized or non-personalized artificial intelligence or machine learning models. The Add-on sends no data to any AI service.</p>
 
 <h2>9. Retention and deletion</h2>
-<p>The licence key and counter remain in your Apps Script properties, on Google's infrastructure, until you delete them. To erase them, open the sidebar (Extensions › VAT Checker for Sheets › Activate licence / My account) and click "Delete my data". The Publisher cannot access this data, which is why deletion is done from the Add-on. You can also revoke the Add-on's access to your account at any time at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. Cached results expire within 6 hours. Billing data is retained by Lemon Squeezy according to its legal obligations; to request its deletion, e-mail us. Step-by-step help is on the <a href="support.html">help page</a>.</p>
+<p>The licence key and counter remain in your Apps Script properties, on Google's infrastructure, until you delete them. To erase them, open the sidebar (Extensions › VAT Checker for Sheets › Activate licence / My account) and click "Delete my data"; the licence activation for that account is freed at the same time. The Publisher cannot access this data, which is why deletion is done from the Add-on. You can also revoke the Add-on's access to your account at any time at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. Cached results expire within 6 hours. Billing data is retained by Lemon Squeezy according to its legal obligations; to request its deletion, e-mail us. Step-by-step help is on the <a href="support.html">help page</a>.</p>
 
 <h2>10. Your rights (GDPR)</h2>
 <p>You have the right to access, rectify, erase and object. Write to <a href="mailto:barterfrance@gmail.com">barterfrance@gmail.com</a>. You may lodge a complaint with the CNIL (<a href="https://www.cnil.fr">cnil.fr</a>) or your local data protection authority.</p>
