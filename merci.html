@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><meta name="referrer" content="no-referrer">
+<title>Merci — SIRENE pour Sheets</title>
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;line-height:1.6;color:#1a1f2b}h1{font-size:30px}a{color:#1a73e8}code{background:#eef1f6;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:14px;padding:2px 6px}.box{background:#f4f6fa;border-radius:10px;padding:14px 18px}#key{display:block;margin:8px 0 12px;padding:10px 12px;word-break:break-all;user-select:all}button{font:inherit;background:#1a73e8;color:#fff;border:0;border-radius:6px;padding:8px 16px;cursor:pointer}</style>
+</head>
+<body>
+<p><a href="/">← SIRENE pour Sheets</a></p>
+<h1>Merci pour votre abonnement</h1>
+
+<div class="box" id="ok" hidden>
+<p><strong>Votre clé de licence</strong></p>
+<code id="key"></code>
+<button id="copy" type="button">Copier la clé</button>
+</div>
+
+<div class="box" id="nokey" hidden>
+<p>Aucune clé de licence n'est indiquée dans l'adresse de cette page. Si vous venez de payer, revenez à la page précédente, ou écrivez-nous à <a href="mailto:barterfrance@gmail.com">barterfrance@gmail.com</a> depuis l'adresse e-mail utilisée pour le paiement : nous vous renverrons votre clé.</p>
+</div>
+
+<h2>Activez-la maintenant</h2>
+<ol>
+  <li>Dans votre feuille Google Sheets, ouvrez <strong>Extensions › SIRENE pour Sheets › Activer une licence / Mon compte</strong>.</li>
+  <li>Collez la clé dans le champ « Clé de licence », puis cliquez sur <strong>Activer la licence</strong>. Vos recherches sont illimitées dès maintenant.</li>
+</ol>
+<p>La même clé s'active sur 3 comptes Google au maximum. Conservez-la, par exemple en ajoutant cette page à vos favoris. Clé perdue ? Écrivez-nous depuis l'adresse e-mail utilisée pour le paiement.</p>
+<p>Link, le service de paiement de Stripe, est le revendeur officiel de l'abonnement : il vous envoie le reçu et la facture par e-mail, et vous permet de gérer ou de résilier l'abonnement sur <a href="https://link.com">link.com</a>. Vous pouvez aussi résilier en nous écrivant. Conditions : <a href="cgu.html">conditions d'utilisation</a>.</p>
+
+<p style="margin-top:40px;font-size:13px;color:#5f6670">SIRENE pour Sheets n'est pas affilié à l'INSEE ni à Google. Google Sheets™ est une marque de Google LLC. · <a href="confidentialite.html">Confidentialité</a> · <a href="support.html">Aide et contact</a></p>
+<script>
+(function () {
+  var k = new URLSearchParams(location.search).get('session_id') || '';
+  if (!/^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(k)) { document.getElementById('nokey').hidden = false; return; }
+  document.getElementById('key').textContent = k;
+  document.getElementById('ok').hidden = false;
+  var b = document.getElementById('copy');
+  b.addEventListener('click', function () {
+    var done = function () { b.textContent = 'Clé copiée'; };
+    var sel = function () { var r = document.createRange(); r.selectNodeContents(document.getElementById('key')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Clé sélectionnée : copiez-la (Ctrl/Cmd + C)'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(k).then(done, sel); else sel();
+  });
+})();
+</script>
+</body>
+</html>
