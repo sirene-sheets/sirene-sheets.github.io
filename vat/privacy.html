@@ -28,7 +28,7 @@
 <ul>
   <li><strong>VIES (European Commission)</strong> receives the VAT number being checked. A VAT number is a public business identifier.</li>
   <li><strong>INSEE Sirene API</strong> receives the French SIREN derived from a French VAT number, only when VIES France is unavailable.</li>
-  <li><strong>Lemon Squeezy</strong> (payment provider, Merchant of Record) processes subscription payments, issues licence keys and receives the key, with a random installation identifier, when the Add-on activates or validates it (a key can be active on up to 3 Google accounts). The Add-on never receives your card details. Policy: <a href="https://www.lemonsqueezy.com/privacy">lemonsqueezy.com/privacy</a>.</li>
+  <li><strong>Stripe</strong> (payment provider; its Link service is the Merchant of Record) processes subscription payments. The licence key is the checkout session number shown after payment; the Add-on sends it to Stripe, with a random installation identifier stored on the subscription, when it activates or validates it (a key can be active on up to 3 Google accounts). The Add-on never receives your card details. Policy: <a href="https://stripe.com/privacy">stripe.com/privacy</a>.</li>
 </ul>
 <p>No other data is shared, and no data is sold, rented or used for advertising.</p>
 
@@ -38,14 +38,14 @@
 <h2 id="data-protection">6. Data protection</h2>
 <p>The data handled by the Add-on, including Google user data (the cell value passed to the function), is protected by the following mechanisms:</p>
 <ul>
-  <li><strong>Encryption in transit</strong>: all requests to VIES, the INSEE Sirene API and the Lemon Squeezy licence API use HTTPS (TLS) only. The Add-on manifest allow-lists only these three HTTPS endpoints; Google Apps Script blocks any other destination.</li>
+  <li><strong>Encryption in transit</strong>: all requests to VIES, the INSEE Sirene API and the Stripe API use HTTPS (TLS) only. The Add-on manifest allow-lists only these three HTTPS endpoints; Google Apps Script blocks any other destination.</li>
   <li><strong>Encryption at rest</strong>: the licence key, the counter and the temporary cache are stored only on Google's infrastructure (Google Apps Script Properties and Cache services), which encrypts data at rest.</li>
-  <li><strong>Isolation and access control</strong>: this data can only be read by the Add-on itself. The Publisher has no access to your spreadsheets, properties or Google credentials. Access to the Google Cloud project, the Add-on code and the Lemon Squeezy account is restricted to the Publisher's own account.</li>
+  <li><strong>Isolation and access control</strong>: this data can only be read by the Add-on itself. The Publisher has no access to your spreadsheets, properties or Google credentials. Access to the Google Cloud project, the Add-on code and the Stripe account is restricted to the Publisher's own account.</li>
   <li><strong>Data minimisation</strong>: the Add-on reads only the VAT number you pass to it and writes only to the current spreadsheet. It cannot open any other file in your Google Drive.</li>
   <li><strong>Limited cache</strong>: check results (public business register data) are cached for at most 6 hours in the Google Apps Script cache to avoid duplicate requests, then deleted automatically. The cache holds no information about who made the check.</li>
-  <li><strong>Secrets</strong>: the Publisher's INSEE API key is kept in script properties, never in the code or in your spreadsheets, and is never shown to users.</li>
+  <li><strong>Secrets</strong>: the Publisher's INSEE API key and restricted Stripe key are kept in script properties, never in the code or in your spreadsheets, and are never shown to users.</li>
   <li><strong>Logs</strong>: when a technical error occurs, Google Apps Script records the error message in Google Cloud Logging, accessible only to the Publisher's account and kept for 30 days.</li>
-  <li><strong>Payments</strong>: card details are entered directly on Lemon Squeezy and processed by its PCI DSS certified payment providers; they never pass through the Add-on.</li>
+  <li><strong>Payments</strong>: card details are entered directly on Stripe's checkout page (PCI DSS level 1 certified); they never pass through the Add-on.</li>
   <li><strong>Incident response</strong>: if a personal data breach occurs, we notify the affected users and, where the GDPR requires it, the French data protection authority (CNIL) within 72 hours.</li>
   <li><strong>In-app notice</strong>: the Add-on sidebar (Extensions › VAT Checker for Sheets › Activate licence / My account) states which data is sent and to whom, links to this policy and lets you delete your data.</li>
 </ul>
@@ -57,7 +57,7 @@
 <p>Data obtained through Google Workspace APIs is not used to develop, improve or train generalized or non-personalized artificial intelligence or machine learning models. The Add-on sends no data to any AI service.</p>
 
 <h2>9. Retention and deletion</h2>
-<p>The licence key and counter remain in your Apps Script properties, on Google's infrastructure, until you delete them. To erase them, open the sidebar (Extensions › VAT Checker for Sheets › Activate licence / My account) and click "Delete my data"; the licence activation for that account is freed at the same time. The Publisher cannot access this data, which is why deletion is done from the Add-on. You can also revoke the Add-on's access to your account at any time at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. Cached results expire within 6 hours. Billing data is retained by Lemon Squeezy according to its legal obligations; to request its deletion, e-mail us. Step-by-step help is on the <a href="support.html">help page</a>.</p>
+<p>The licence key and counter remain in your Apps Script properties, on Google's infrastructure, until you delete them. To erase them, open the sidebar (Extensions › VAT Checker for Sheets › Activate licence / My account) and click "Delete my data"; the licence activation for that account is freed at the same time. The Publisher cannot access this data, which is why deletion is done from the Add-on. You can also revoke the Add-on's access to your account at any time at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. Cached results expire within 6 hours. Billing data is retained by Stripe (Link) according to its legal obligations; to request its deletion, e-mail us. Step-by-step help is on the <a href="support.html">help page</a>.</p>
 
 <h2>10. Your rights (GDPR)</h2>
 <p>You have the right to access, rectify, erase and object. Write to <a href="mailto:barterfrance@gmail.com">barterfrance@gmail.com</a>. You may lodge a complaint with the CNIL (<a href="https://www.cnil.fr">cnil.fr</a>) or your local data protection authority.</p>
