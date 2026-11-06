@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vérifier des numéros de TVA intracommunautaire en masse dans Google Sheets (VIES)</title>
+<meta name="description" content="Vérifier une liste de numéros de TVA intracommunautaire d'un coup, sans copier-coller dans VIES : une formule Google Sheets qui interroge VIES pour toute une colonne et renvoie valide/non valide, nom et adresse.">
+<link rel="canonical" href="https://sheets.reciproc.net/blog/verifier-tva-intracommunautaire-en-masse.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Vérifier des numéros de TVA intracommunautaire en masse dans Google Sheets","step":[{"@type":"HowToStep","text":"Mettre les numéros de TVA dans une colonne (un par ligne, espaces et points acceptés)."},{"@type":"HowToStep","text":"Installer l'add-on VAT Checker for Sheets depuis le Google Workspace Marketplace et ouvrir une fois le menu Extensions."},{"@type":"HowToStep","text":"Saisir =TVA(A2:A200;\"valide;nom;adresse\") dans la cellule à droite de la première ligne."}]}</script>
+<style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;line-height:1.65;color:#1a1f2b}h1{font-size:32px;line-height:1.2}h2{font-size:22px;margin-top:34px}a{color:#1a73e8}code,pre{background:#f1f3f4;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:14px}code{padding:2px 6px}pre{padding:12px 14px;overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{border:1px solid #e3e7ee;padding:7px 10px;text-align:left}th{background:#f1f3f4}.cta{background:#f4f6fa;border:1px solid #e3e7ee;border-radius:12px;padding:18px 22px;margin:30px 0}.btn{display:inline-block;background:#0b57d0;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:8px}.muted{color:#5f6670;font-size:14px}@media(max-width:600px){h1{font-size:26px}table{font-size:12.5px}}</style>
+</head>
+<body>
+<p><a href="/vat/">← VAT Checker for Sheets</a> · <a href="/">SIRENE pour Sheets</a></p>
+<h1>Vérifier des numéros de TVA intracommunautaire en masse dans Google Sheets</h1>
+<p class="muted">Mis à jour le 6 novembre 2026 · 4 min de lecture</p>
+
+<p>Le site VIES de la Commission européenne vérifie un numéro de TVA à la fois. Pour 15 clients, ça passe. Pour un fichier de 400 fournisseurs, une relance de fin d'année ou un contrôle avant facturation en autoliquidation, c'est une demi-journée de copier-coller. Voici comment faire la même vérification sur une colonne entière, directement dans Google Sheets.</p>
+
+<h2>Le résultat en une formule</h2>
+<p>Avec les numéros de TVA en colonne A, à partir de A2 :</p>
+<pre>=TVA(A2:A200;"valide;nom;adresse")</pre>
+<table>
+  <tr><th>A (n° de TVA)</th><th>valide</th><th>nom</th><th>adresse</th></tr>
+  <tr><td>BE0403170701</td><td>Valid</td><td>SA ELECTRABEL</td><td>Boulevard Simon Bolivar 36, 1000 Bruxelles</td></tr>
+  <tr><td>FR00000000000</td><td>Invalid</td><td></td><td></td></tr>
+</table>
+<p>Les verdicts s'affichent « Valid » / « Invalid ». La réponse vient de VIES, interrogé en direct ; les numéros de la colonne sont vérifiés en parallèle. Les espaces et les points dans les numéros sont acceptés (« FR 27 552 032 534 » fonctionne). La version anglaise de la formule, <code>=VAT(A2)</code>, fait exactement la même chose.</p>
+
+<h2>Pas à pas</h2>
+<ol>
+  <li><strong>Une colonne, un numéro par ligne</strong>, préfixe pays compris (FR, DE, BE, IT…). Si vous n'avez que des SIREN français, le numéro de TVA se calcule : voir <a href="/blog/numero-tva-depuis-siren.html">calculer le numéro de TVA à partir du SIREN</a>.</li>
+  <li><strong>Installez l'add-on</strong> <a href="https://workspace.google.com/marketplace/app/vat_checker_for_sheets/207813576872">VAT Checker for Sheets</a> depuis le Google Workspace Marketplace (gratuit, 100 vérifications offertes, sans carte bancaire).</li>
+  <li><strong>Ouvrez une fois</strong> le menu <em>Extensions › VAT Checker for Sheets</em> dans votre fichier : la formule est alors disponible (sinon elle affiche <code>#NAME?</code>).</li>
+  <li><strong>Saisissez la formule</strong> à droite de la première ligne. En français, les arguments sont séparés par un point-virgule ; dans un tableur réglé en anglais, par une virgule : <code>=VAT(A2:A200,"valid;name")</code>.</li>
+</ol>
+<p>Pour une très longue liste (plusieurs milliers de lignes), découpez-la en plusieurs formules de quelques centaines de lignes. Les réponses sont gardées 6 heures en cache : recalculer la feuille ne réinterroge pas VIES.</p>
+
+<h2>Pourquoi vérifier, et quand</h2>
+<ul>
+  <li><strong>Avant une facture HT à un client d'un autre pays de l'UE</strong> (livraison intracommunautaire ou prestation en autoliquidation) : le numéro de TVA du client doit figurer sur la facture, et l'exonération suppose que le client soit bien assujetti. Un numéro invalide, c'est le risque de devoir payer la TVA à sa place.</li>
+  <li><strong>À l'ouverture d'un compte fournisseur ou client</strong>, pour repérer un numéro mal saisi ou appartenant à une autre société (le nom renvoyé par VIES sert à ça).</li>
+  <li><strong>Périodiquement sur le fichier existant</strong> : un numéro valide l'an dernier peut avoir été radié depuis.</li>
+</ul>
+
+<h2>Les cas particuliers à connaître</h2>
+<p><strong>VIES France saturé.</strong> Le service français renvoie souvent une erreur de surcharge en journée. Dans ce cas, l'add-on vérifie les numéros français dans la base Sirene de l'INSEE (clé de contrôle + entreprise active) et l'indique clairement (« Valid (INSEE) ») : ce n'est pas une réponse VIES, refaites la vérification plus tard si vous avez besoin de la réponse officielle.</p>
+<p><strong>Pas de nom pour l'Allemagne.</strong> Certains États membres (Allemagne, Espagne pour les particuliers…) ne publient pas le nom et l'adresse via VIES. La validité, elle, est bien vérifiée.</p>
+<p><strong>Royaume-Uni.</strong> Depuis le Brexit, les numéros GB ne sont plus dans VIES (et ne sont pas pris en charge par l'add-on). Les numéros XI (Irlande du Nord) le sont.</p>
+<p><strong>Valeur de preuve.</strong> Le champ <code>date</code> donne la date de la vérification. Pour un numéro de consultation officiel à archiver, utilisez le site VIES pour les clients concernés : l'add-on sert à trier vite un gros fichier, pas à constituer une archive légale.</p>
+
+<h2>Et sans add-on ?</h2>
+<p>Trois autres options existent : le site VIES numéro par numéro (gratuit, lent) ; l'API VIES de la Commission européenne, gratuite mais qui demande d'écrire et d'héberger du code ; ou un script Apps Script maison, qui se heurte vite aux erreurs de saturation des services nationaux et aux quotas de Google. L'add-on fait ce travail (relances, cache, repli INSEE pour la France) à votre place.</p>
+
+<div class="cta">
+  <strong>VAT Checker for Sheets</strong> — validité VIES, nom et adresse pour toute une colonne de numéros de TVA. 100 vérifications offertes, puis 9 € HT/mois en illimité.<br>
+  <a class="btn" href="https://workspace.google.com/marketplace/app/vat_checker_for_sheets/207813576872">Installer gratuitement</a>
+  &nbsp; <a href="/vat/">En savoir plus →</a>
+</div>
+
+<p class="muted">Sources : Commission européenne (VIES), INSEE (base Sirene). Cet article est informatif et ne constitue pas un conseil fiscal. VAT Checker for Sheets n'est affilié ni à la Commission européenne ni à Google. Google Sheets™ est une marque de Google LLC.</p>
+</body>
+</html>
